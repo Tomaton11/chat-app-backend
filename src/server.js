@@ -13,7 +13,7 @@ const app = express()
 //Dehabilito la politica de cors
 //Si quieren un backend publico
 const corsOptions = {
-	origin: ['http://localhost:5173', 'https://frontend-six-coral-49.vercel.app'], // 🚨 poné tu frontend real de Vercel
+	origin: ['http://localhost:5173', 'https://frontend-six-coral-49.vercel.app'],
 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 	credentials: true
 };
@@ -55,6 +55,13 @@ app.get('/api/test/comprar', authMiddleware, (req, res) => {
     })
 } )
 
-app.listen(ENVIROMENT.URL_BACKEND, () =>{
+/* app.listen(ENVIROMENT.URL_BACKEND, () =>{
     console.log(`El servidor se esta ejecutando en ${ENVIROMENT.URL_BACKEND}`)
 }) 
+ */
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
