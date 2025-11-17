@@ -65,3 +65,10 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
+
+// justo arriba de app.listen(PORT, ...)
+app.get("/ping", (req, res) => {
+  console.log("✅ /ping llamado");
+  res.status(200).json({ ok: true, message: "Backend vivo 💚" });
+});
