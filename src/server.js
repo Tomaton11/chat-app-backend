@@ -12,13 +12,11 @@ const app = express()
 
 //Dehabilito la politica de cors
 //Si quieren un backend publico
-const corsOptions = {
-	origin: ['http://localhost:5173', 'https://frontend-six-coral-49.vercel.app'],
-	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-	credentials: true
-};
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+}));
 
-app.use(cors(corsOptions));
 app.use(express.json())
 
 
@@ -45,7 +43,7 @@ Probar hacer el registro con postman
 app.use('/api/auth', authRouter)
 app.use('/api/workspaces', workspace_router)
 
-app.use('api/channels', channelRouter)
+app.use('/api/channels', channelRouter)
 
 app.get('/api/test/comprar', authMiddleware, (req, res) => {
     req.json({
@@ -62,13 +60,15 @@ app.get('/api/test/comprar', authMiddleware, (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
-
-
 // justo arriba de app.listen(PORT, ...)
 app.get("/ping", (req, res) => {
   console.log("✅ /ping llamado");
   res.status(200).json({ ok: true, message: "Backend vivo 💚" });
 });
+
+
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
+});
+
+
