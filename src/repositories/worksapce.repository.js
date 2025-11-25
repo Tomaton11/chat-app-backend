@@ -46,6 +46,24 @@ class WorkspaceRepository {
         members: user_id
     }).populate('owner', 'username email'); // Opcional: para traer info del owner
 }
+
+async getUserWorkspacesByOwnerAndMembership(user_id) {
+    const workspaces = await Workspace.find({
+        members: user_id
+    }).populate("owner", "username email");
+    const owned = []
+    const member = []
+
+    for (const ws of workspaces) {
+        //si el usuario es el owner
+        if (ws.owner.equals(user_id)){
+            owned.push(ws);
+        } else {
+            member.push(ws)
+        }
+    }
+    return { owned, member };
+    }
 }
 
 
